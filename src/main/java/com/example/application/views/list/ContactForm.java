@@ -72,6 +72,7 @@ public class ContactForm extends FormLayout {
         save.addClickShortcut(Key.ENTER);
         cancel.addClickShortcut(Key.ESCAPE);
 
+        binder.addStatusChangeListener(e -> save.setEnabled(binder.isValid()));
         return new HorizontalLayout(save, delete, cancel);
     }
 
@@ -126,5 +127,9 @@ public class ContactForm extends FormLayout {
     }
     public Registration addCloseListener(ComponentEventListener<CloseEvent> listener) {
         return addListener(CloseEvent.class, listener);
+    }
+    public <T extends ComponentEvent<?>> Registration addListener(Class<T> eventType,
+                                                                  ComponentEventListener<T> listener) {
+        return getEventBus().addListener(eventType, listener);
     }
 }
